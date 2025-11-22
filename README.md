@@ -2,8 +2,6 @@
 
 > **91.67% Test Pass Rate** | 25 Automated Tests | OAuth2 Authentication | CRUD Operations
 
-## 🎯 Business Impact
-
 Designed and executed comprehensive API testing strategy for a Passenger Management System, identifying critical defects before production deployment. 
 
 **Role:** QA Test Lead | **Sprint:** 3 | **Team Size:** 4 QA Engineers | **Duration:** July 7-21, 2025
@@ -29,9 +27,3 @@ Designed and executed comprehensive API testing strategy for a Passenger Managem
 6. **DELETE** `/deletePassengerById/{id}` - Delete records (3 assertions)
 
 **Total Tests:** 25 | **Passed:** 23 | **Failed:** 2 | **Execution Time:** 1.45s
-
-
-
----
-
-**⭐ Recruiter Note:** This project demonstrates production-ready API testing skills applicable to QA Automation Engineer, SDET, and API Testing roles. View the collections to see detailed test scripts and validation logic.
