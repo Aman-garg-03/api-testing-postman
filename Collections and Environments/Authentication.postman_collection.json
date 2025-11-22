@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "5275869d-a852-44cf-86e8-de89250da787",
+		"name": "Authentication",
+		"description": "## Login Module:\n\nValidate login with correct and incorrect  \ncredentials.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40441519"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"        pm.expect(pm.response.code).to.equal(200);",
+							"    });",
+							"",
+							"    pm.test(\"Response time is less than 200ms\", function () {",
+							"        pm.expect(pm.response.responseTime).to.be.below(200);",
+							"    });",
+							"",
+							"    pm.test(\"Validate the presence of required fields in the response schema\", function () {",
+							"        const responseData = pm.response.json();",
+							"        ",
+							"        pm.expect(responseData).to.be.an('object');",
+							"        pm.expect(responseData).to.have.all.keys('access_token', 'expires_in', 'refresh_expires_in', 'token_type', 'not-before-policy', 'scope');",
+							"    });",
+							"",
+							"    pm.test(\"Access token is a non-empty string\", function () {",
+							"        const responseData = pm.response.json();",
+							"        ",
+							"        pm.expect(responseData).to.be.an('object');",
+							"        pm.expect(responseData.access_token).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Access token should not be empty\");",
+							"    });",
+							"",
+							"    pm.test(\"Expiration times are non-negative integers\", function () {",
+							"        const responseData = pm.response.json();",
+							"        ",
+							"        pm.expect(responseData).to.have.property('expires_in').that.is.a('number').and.is.at.least(0);",
+							"        pm.expect(responseData).to.have.property('refresh_expires_in').that.is.a('number').and.is.at.least(0);",
+							"    });",
+							"",
+							"    var template = `",
+							"    <style type=\"text/css\">",
+							"        .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"        .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"        .tftable tr {background-color:#ffffff;}",
+							"        .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"        .tftable tr:hover {background-color:#e0ffff;}",
+							"    </style>",
+							"",
+							"    <table class=\"tftable\" border=\"1\">",
+							"        <tr>",
+							"            <th>Access Token</th>",
+							"            <th>Expires In</th>",
+							"            <th>Refresh Expires In</th>",
+							"            <th>Token Type</th>",
+							"            <th>Not Before Policy</th>",
+							"            <th>Scope</th>",
+							"        </tr>",
+							"        <tr>",
+							"            <td>{{response.access_token}}</td>",
+							"            <td>{{response.expires_in}}</td>",
+							"            <td>{{response.refresh_expires_in}}</td>",
+							"            <td>{{response.token_type}}</td>",
+							"            <td>{{response.not-before-policy}}</td>",
+							"            <td>{{response.scope}}</td>",
+							"        </tr>",
+							"    </table>",
+							"    `;",
+							"",
+							"    function constructVisualizerPayload() {",
+							"        return { response: pm.response.json() };",
+							"    }",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "soap-test",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{AUTHURL}}",
+					"host": [
+						"{{AUTHURL}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

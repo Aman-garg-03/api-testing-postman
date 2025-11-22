@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "563ddb51-d3d7-4e76-be41-501fe95f58b6",
+		"name": "PassengerService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40441519"
+	},
+	"item": [
+		{
+			"name": "AddPassenger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Passenger ID</th>",
+							"        <th>Name</th>",
+							"        <th>Mobile</th>",
+							"        <th>Gender</th>",
+							"        <th>Aadhaar Number</th>",
+							"        <th>Address</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response}}",
+							"        <tr>",
+							"            <td>{{passengerId}}</td>",
+							"            <td>{{passengerName}}</td>",
+							"            <td>{{passengerMobile}}</td>",
+							"            <td>{{passengerGender}}</td>",
+							"            <td>{{passengerAadhaarNumber}}</td>",
+							"            <td>{{passengerAddress}}</td>",
+							"        </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return {response: pm.response.json()};",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response is an array with at least one passenger object\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(responseData[0]).to.be.an('object');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the passenger object schema for required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    ",
+							"    responseData.forEach(passenger => {",
+							"        pm.expect(passenger).to.have.all.keys('passengerId', 'passengerName', 'passengerMobile', 'passengerGender', 'passengerAadhaarNumber', 'passengerAddress');",
+							"        ",
+							"        pm.expect(passenger.passengerId).to.be.a('number');",
+							"        pm.expect(passenger.passengerName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"passengerName should not be empty\");",
+							"        pm.expect(passenger.passengerMobile).to.be.a('string').and.to.have.lengthOf.at.least(1, \"passengerMobile should not be empty\");",
+							"        pm.expect(passenger.passengerGender).to.be.a('string').and.to.have.lengthOf.at.least(1, \"passengerGender should not be empty\");",
+							"        pm.expect(passenger.passengerAadhaarNumber).to.be.a('string').and.to.have.lengthOf.at.least(1, \"passengerAadhaarNumber should not be empty\");",
+							"        pm.expect(passenger.passengerAddress).to.be.a('string').and.to.have.lengthOf.at.least(1, \"passengerAddress should not be empty\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"PassengerMobile is in a valid mobile number format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    responseData.forEach(function(passenger) {",
+							"        pm.expect(passenger.passengerMobile).to.match(/^\\+?[1-9]\\d{1,14}$/, \"PassengerMobile format is invalid\");",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "passengerId",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "passengerName",
+							"value": "Matilda",
+							"type": "text"
+						},
+						{
+							"key": "passengerMobile",
+							"value": "9898765654",
+							"type": "text"
+						},
+						{
+							"key": "passengerGender",
+							"value": "Female",
+							"type": "text"
+						},
+						{
+							"key": "passengerAadhaarNumber",
+							"value": "1239876765Y",
+							"type": "text"
+						},
+						{
+							"key": "passengerAddress",
+							"value": "Chennai",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASEURL}}/addPassenger",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"addPassenger"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ViewPassengerbyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Passenger ID</th>",
+							"        <th>Name</th>",
+							"        <th>Mobile</th>",
+							"        <th>Gender</th>",
+							"        <th>Aadhaar Number</th>",
+							"        <th>Address</th>",
+							"    </tr>",
+							"    ",
+							"    <tr>",
+							"        <td>{{response.passengerId}}</td>",
+							"        <td>{{response.passengerName}}</td>",
+							"        <td>{{response.passengerMobile}}</td>",
+							"        <td>{{response.passengerGender}}</td>",
+							"        <td>{{response.passengerAadhaarNumber}}</td>",
+							"        <td>{{response.passengerAddress}}</td>",
+							"    </tr>",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return {response: pm.response.json()}",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.all.keys('passengerId', 'passengerName', 'passengerMobile', 'passengerGender', 'passengerAadhaarNumber', 'passengerAddress');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Passenger ID is a non-negative integer\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.have.property('passengerId').that.is.a('number').and.is.at.least(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Mobile number is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.passengerMobile).to.exist;",
+							"    pm.expect(responseData.passengerMobile).to.match(/^\\+?[1-9]\\d{1,14}$/, \"Mobile number format is invalid\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "passengerId",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "passengerName",
+							"value": "Matilda",
+							"type": "text"
+						},
+						{
+							"key": "passengerMobile",
+							"value": "9898765654",
+							"type": "text"
+						},
+						{
+							"key": "passengerGender",
+							"value": "Female",
+							"type": "text"
+						},
+						{
+							"key": "passengerAadhaarNumber",
+							"value": "1239876765Y",
+							"type": "text"
+						},
+						{
+							"key": "passengerAddress",
+							"value": "Chennai",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASEURL}}/viewPassengerById/{{passenger_id}}",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"viewPassengerById",
+						"{{passenger_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ViewPassengerList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Passenger ID</th>",
+							"        <th>Name</th>",
+							"        <th>Mobile</th>",
+							"        <th>Gender</th>",
+							"        <th>Aadhaar Number</th>",
+							"        <th>Address</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response}}",
+							"        <tr>",
+							"            <td>{{passengerId}}</td>",
+							"            <td>{{passengerName}}</td>",
+							"            <td>{{passengerMobile}}</td>",
+							"            <td>{{passengerGender}}</td>",
+							"            <td>{{passengerAadhaarNumber}}</td>",
+							"            <td>{{passengerAddress}}</td>",
+							"        </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response is an array with at least one element\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Each passenger object should have the correct schema\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"",
+							"    responseData.forEach(passenger => {",
+							"        pm.expect(passenger).to.be.an('object');",
+							"        pm.expect(passenger).to.have.all.keys('passengerId', 'passengerName', 'passengerMobile', 'passengerGender', 'passengerAadhaarNumber', 'passengerAddress');",
+							"        pm.expect(passenger.passengerId).to.be.a('number');",
+							"        pm.expect(passenger.passengerName).to.be.a('string');",
+							"        pm.expect(passenger.passengerMobile).to.be.a('string');",
+							"        pm.expect(passenger.passengerGender).to.be.a('string');",
+							"        pm.expect(passenger.passengerAadhaarNumber).to.be.a('string');",
+							"        pm.expect(passenger.passengerAddress).to.be.a('string');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Passenger Mobile is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    responseData.forEach(function(passenger) {",
+							"        pm.expect(passenger.passengerMobile).to.match(/^\\+\\d{1,3}\\s?\\d{4,14}$/);",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Passenger Aadhaar Number is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"    responseData.forEach(function(passenger) {",
+							"        pm.expect(passenger.passengerAadhaarNumber).to.exist;",
+							"        pm.expect(passenger.passengerAadhaarNumber).to.match(/^\\d{4}\\s?\\d{4}\\s?\\d{4}$/, \"Aadhaar Number should be in the format of 12 digits, optionally with spaces\");",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASEURL}}/viewPassengerList",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"viewPassengerList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ViewPassengerbyNameandMobile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Passenger ID</th>",
+							"        <th>Name</th>",
+							"        <th>Mobile</th>",
+							"        <th>Gender</th>",
+							"        <th>Aadhaar Number</th>",
+							"        <th>Address</th>",
+							"    </tr>",
+							"    <tr>",
+							"        <td>{{response.passengerId}}</td>",
+							"        <td>{{response.passengerName}}</td>",
+							"        <td>{{response.passengerMobile}}</td>",
+							"        <td>{{response.passengerGender}}</td>",
+							"        <td>{{response.passengerAadhaarNumber}}</td>",
+							"        <td>{{response.passengerAddress}}</td>",
+							"    </tr>",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() };",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response contains passengerName\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.passengerName).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Response contains passengerMobile\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.passengerMobile).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{BASEURL}}/viewPassengerByNameMobile/{{passengerName}}/{{passengerMobile}}",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"viewPassengerByNameMobile",
+						"{{passengerName}}",
+						"{{passengerMobile}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePassengerbyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Passenger ID</th>",
+							"        <th>Name</th>",
+							"        <th>Mobile</th>",
+							"        <th>Gender</th>",
+							"        <th>Aadhaar Number</th>",
+							"        <th>Address</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response}}",
+							"        <tr>",
+							"            <td>{{passengerId}}</td>",
+							"            <td>{{passengerName}}</td>",
+							"            <td>{{passengerMobile}}</td>",
+							"            <td>{{passengerGender}}</td>",
+							"            <td>{{passengerAadhaarNumber}}</td>",
+							"            <td>{{passengerAddress}}</td>",
+							"        </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() };",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"",
+							"pm.test(\"Status code is 200 or 204\", function () {",
+							"    pm.expect(pm.response.code === 200 || pm.response.code === 204).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Response is JSON or empty\", function () {",
+							"    try {",
+							"        pm.response.json();",
+							"        pm.expect(true).to.be.true;",
+							"    } catch (e) {",
+							"        pm.expect(pm.response.text()).to.be.oneOf(['', null]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASEURL}}/deletePassengerById/{{passenger_id}}",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"deletePassengerById",
+						"{{passenger_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "passenger_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "passengerName",
+			"value": "Rakesh",
+			"type": "string"
+		},
+		{
+			"key": "passengerMobile",
+			"value": "1234567890",
+			"type": "string"
+		}
+	]
+}

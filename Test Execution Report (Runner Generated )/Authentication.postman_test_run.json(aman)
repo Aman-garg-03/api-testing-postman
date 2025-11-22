@@ -1,0 +1,77 @@
+{
+	"id": "d39237a9-699d-425d-96d7-c5c8c3c5af84",
+	"name": "Authentication",
+	"timestamp": "2025-08-19T06:30:21.809Z",
+	"collection_id": "40441519-5275869d-a852-44cf-86e8-de89250da787",
+	"folder_id": 0,
+	"environment_id": "40441519-b9d086d0-84fe-40bf-81a1-0e85302908c2",
+	"totalPass": 4,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-08-19T06:30:20.889Z",
+	"totalFail": 1,
+	"results": [
+		{
+			"id": "b7fd76c1-72a8-496f-aa28-884081d76621",
+			"name": "Authentication",
+			"url": "https://keycloak.tekstac.com/realms/soapdemo/protocol/openid-connect/token",
+			"time": 229,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": false,
+				"Validate the presence of required fields in the response schema": true,
+				"Access token is a non-empty string": true,
+				"Expiration times are non-negative integers": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Validate the presence of required fields in the response schema": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Access token is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Expiration times are non-negative integers": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				229
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": false,
+					"Validate the presence of required fields in the response schema": true,
+					"Access token is a non-empty string": true,
+					"Expiration times are non-negative integers": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 229,
+	"collection": {
+		"requests": [
+			{
+				"id": "b7fd76c1-72a8-496f-aa28-884081d76621",
+				"method": "POST"
+			}
+		]
+	}
+}
